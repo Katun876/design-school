@@ -377,39 +377,66 @@ h2 em{font-style:italic;font-weight:300}
 
 /* ── FOOTER ── */
 footer{
-  border-top:1px solid var(--line-w);
-  padding:0 36px 0;
+  background:#000;color:var(--paper);
+  padding:0 36px;
+  margin-top:0;
 }
+.footer-hero{
+  padding:64px 0 52px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.footer-headline{
+  font-size:clamp(52px,9vw,140px);font-weight:900;letter-spacing:-.05em;
+  text-transform:uppercase;line-height:.93;margin-bottom:32px;
+}
+.footer-headline em{color:var(--y);font-style:italic;font-weight:300}
+.footer-cta-row{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+}
+.footer-cta-row .btn-y{background:var(--y);color:#000;font-size:11px;letter-spacing:.1em;padding:14px 28px}
+.footer-cta-row .btn-y:hover{background:#fff}
+.footer-cta-social{display:flex;gap:16px;margin-left:auto}
+.footer-cta-social a{
+  font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);transition:.15s;text-decoration:none;
+}
+.footer-cta-social a:hover{color:var(--y)}
 .footer-main{
-  display:grid;grid-template-columns:1fr 1fr 1fr 1fr;
-  gap:1px;background:var(--line-w);
-  border-bottom:1px solid var(--line-w);
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:0;
+  border-bottom:1px solid rgba(255,255,255,.1);
 }
-.footer-col{padding:40px 32px}
+.footer-col{
+  padding:36px 0;
+  padding-right:32px;
+  border-right:1px solid rgba(255,255,255,.08);
+}
+.footer-col:last-child{border-right:none}
+.footer-col:not(:first-child){padding-left:28px}
 .footer-col-title{
-  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--mid);margin-bottom:20px;
+  font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);margin-bottom:18px;
 }
 .footer-col a{
-  display:block;font-size:13.5px;color:rgba(245,242,238,.45);
-  margin-bottom:10px;transition:.15s;
+  display:block;font-size:13px;color:rgba(255,255,255,.5);
+  margin-bottom:9px;transition:.15s;text-decoration:none;
 }
-.footer-col a:hover{color:var(--paper)}
-.footer-logo-col{display:flex;flex-direction:column;justify-content:space-between}
+.footer-col a:hover{color:#fff}
+.footer-logo-col{display:flex;flex-direction:column;gap:12px}
 .footer-logo-big{
-  font-size:38px;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;
-  color:var(--paper);line-height:1;
+  font-size:28px;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;
+  color:#fff;line-height:1;
 }
 .footer-logo-big span{color:var(--y)}
-.footer-tagline{font-size:12px;color:var(--mid);margin-top:8px}
+.footer-tagline{font-size:11.5px;color:rgba(255,255,255,.3);line-height:1.6;max-width:180px}
 .footer-bot{
   display:flex;justify-content:space-between;align-items:center;
-  padding:20px 0;
+  padding:18px 0;
 }
-.footer-bot p{font-size:11.5px;color:var(--mid);letter-spacing:.04em}
+.footer-bot p{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.04em}
 .footer-bot-links{display:flex;gap:24px}
-.footer-bot-links a{font-size:11.5px;color:var(--mid);transition:.15s}
-.footer-bot-links a:hover{color:var(--paper)}
+.footer-bot-links a{font-size:11px;color:rgba(255,255,255,.2);transition:.15s;text-decoration:none}
+.footer-bot-links a:hover{color:rgba(255,255,255,.6)}
 
 /* ── TOUCH: убираем кастомный курсор ── */
 @media(hover:none),(pointer:coarse){
@@ -508,10 +535,14 @@ footer{
   .btn-y-big,.btn-ghost-big{font-size:12px;padding:15px 20px}
 
   /* FOOTER */
+  .footer-hero{padding:48px 0 40px}
+  .footer-cta-social{display:none}
   .footer-main{grid-template-columns:1fr 1fr}
   footer{padding:0 20px}
-  .footer-col{padding:28px 16px}
-  .footer-logo-big{font-size:26px}
+  .footer-col{padding:24px 16px;border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
+  .footer-col:last-child{border-bottom:none}
+  .footer-col:not(:first-child){padding-left:16px}
+  .footer-logo-big{font-size:24px}
   .footer-bot{
     flex-direction:column;align-items:flex-start;
     gap:12px;padding:16px 0 24px;
@@ -604,13 +635,16 @@ footer{
   .cta-actions{gap:8px}
 
   /* FOOTER */
+  .footer-hero{padding:36px 0 28px}
+  .footer-headline{font-size:clamp(36px,11vw,64px)}
   .footer-main{grid-template-columns:1fr}
   footer{padding:0 16px}
-  .footer-col{padding:20px 0}
+  .footer-col{padding:18px 0;border-right:none;padding-right:0;padding-left:0;border-bottom:1px solid rgba(255,255,255,.08)}
+  .footer-col:last-child{border-bottom:none}
   .footer-logo-big{font-size:20px}
   .footer-tagline{font-size:11px}
   .footer-col a{font-size:13px;margin-bottom:8px}
-  .footer-bot{padding:14px 0 20px}
+  .footer-bot{padding:14px 0 20px;flex-direction:column;align-items:flex-start;gap:8px}
   .footer-bot p{font-size:10.5px}
   .footer-bot-links a{font-size:10.5px}
   .footer-bot-links{gap:12px;flex-wrap:wrap}
@@ -1025,6 +1059,17 @@ footer{
 
 <!-- FOOTER -->
 <footer>
+  <div class="footer-hero">
+    <div class="footer-headline">Стань<br><em>дизайнером</em><br>интерфейсов.</div>
+    <div class="footer-cta-row">
+      <a href="#cta" class="btn-y">Начать обучение</a>
+      <div class="footer-cta-social">
+        <a href="#">Telegram</a>
+        <a href="#">Instagram</a>
+        <a href="#">Behance</a>
+      </div>
+    </div>
+  </div>
   <div class="footer-main">
     <div class="footer-col footer-logo-col">
       <div class="footer-logo-big">Design<span>S</span>chool</div>
