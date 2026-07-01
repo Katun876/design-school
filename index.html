@@ -407,24 +407,192 @@ footer{
 .footer-bot-links a{font-size:11.5px;color:var(--mid);transition:.15s}
 .footer-bot-links a:hover{color:var(--paper)}
 
+/* ── TOUCH: убираем кастомный курсор ── */
+@media(hover:none),(pointer:coarse){
+  body{cursor:auto}
+  .cursor,.cursor-ring{display:none}
+  button,a{cursor:pointer}
+}
+
+/* ── ПЛАНШЕТ ≤ 900px ── */
 @media(max-width:900px){
-  nav{grid-template-columns:1fr auto;padding:0 20px}
+
+  /* NAV */
+  nav{grid-template-columns:auto 1fr;gap:0;padding:0 20px}
   .nav-left{display:none}
+  .nav-right{gap:10px}
   .nav-right .nav-tag{display:none}
-  #hero{padding-top:56px}
-  .hero-top,.hero-title-row{padding:32px 20px}
+  .nav-logo{text-align:left}
+
+  /* HERO */
+  #hero{padding-top:52px}
   .hero-top{grid-template-columns:1fr}
-  .hero-canvas-wrap{height:240px}
-  .hero-cta-row{flex-direction:column;align-items:flex-start}
-  .sec{padding:56px 20px}
-  .aud-grid,.fmt-row,.inst-grid,.testi-grid{grid-template-columns:1fr}
+  .hero-meta{
+    padding:28px 20px 24px;
+    border-right:none;border-bottom:1px solid var(--line-w);
+  }
+  .hero-meta-val{font-size:22px}
+  .hero-meta-bottom{gap:24px}
+  .mini-stat-n{font-size:30px}
+  .hero-canvas-wrap{height:220px}
+  .hero-title-row{padding:28px 20px 32px}
+  h1{font-size:clamp(42px,10vw,72px);line-height:.98}
+  .hero-cta-row{flex-direction:column;align-items:flex-start;gap:20px;margin-top:24px}
+  .hero-sub{max-width:100%;font-size:14px}
+  .hero-actions{flex-wrap:wrap;gap:10px}
+  .btn-y,.btn-ghost{font-size:11px;padding:12px 20px}
+
+  /* SECTIONS */
+  .sec{padding:52px 20px}
+  .sec-header{
+    grid-template-columns:auto 1fr;gap:12px;
+    margin-bottom:36px;
+  }
+  .sec-count{display:none}
+  h2{font-size:clamp(30px,7vw,52px)}
+
+  /* AUDIENCE */
+  .aud-grid{grid-template-columns:1fr}
+  .stat-cell{grid-column:auto !important}
+  .aud-cell,.stat-cell{padding:30px 22px}
+  .big-stat{font-size:60px}
+
+  /* PROGRAMME */
   .prog-grid{grid-template-columns:1fr}
-  .prog-info{position:static}
-  .res-row{grid-template-columns:60px 1fr}
+  .prog-info{
+    position:static;padding:24px 20px;
+    border-right:none;border-bottom:1px solid var(--line-w);
+  }
+  .prog-info p{margin-bottom:20px}
+  .mod-btn{
+    grid-template-columns:40px 1fr 28px;
+    gap:12px;padding:16px 18px;
+  }
+  .mod-dur{display:none}
+  .mod-body{padding:0 18px 16px 70px}
+
+  /* FORMAT */
+  .fmt-row{grid-template-columns:1fr}
+  .fmt-cell{padding:36px 24px}
+  .fmt-n{font-size:80px;right:-4px;bottom:-10px}
+
+  /* RESULTS */
+  .res-row{grid-template-columns:60px 1fr;padding:22px 0}
   .res-arrow{display:none}
-  .cta-block{grid-template-columns:1fr}
+  .res-row-n{font-size:36px}
+  .res-body{padding:0 20px 0 0}
+  .res-body h3{font-size:17px}
+  .res-body p{font-size:13px}
+
+  /* INSTRUCTORS */
+  .inst-grid{grid-template-columns:1fr}
+  .icard-art{height:200px}
+
+  /* TESTIMONIALS */
+  .testi-grid{grid-template-columns:1fr}
+  .tcard{padding:28px 22px}
+  .tcard-q{font-size:15px}
+
+  /* CTA */
+  .cta-block{grid-template-columns:1fr;min-height:auto}
+  .cta-left{
+    padding:48px 20px 32px;
+    border-right:none;border-bottom:1px solid var(--line-w);
+  }
+  .cta-right{padding:32px 20px 48px}
+  .cta-title{font-size:clamp(36px,9vw,60px)}
+  .btn-y-big,.btn-ghost-big{font-size:12px;padding:15px 20px}
+
+  /* FOOTER */
   .footer-main{grid-template-columns:1fr 1fr}
   footer{padding:0 20px}
+  .footer-col{padding:28px 16px}
+  .footer-logo-big{font-size:26px}
+  .footer-bot{
+    flex-direction:column;align-items:flex-start;
+    gap:12px;padding:16px 0 24px;
+  }
+  .footer-bot-links{flex-wrap:wrap;gap:12px}
+}
+
+/* ── МОБИЛКА ≤ 480px ── */
+@media(max-width:480px){
+
+  /* NAV */
+  nav{height:50px}
+  .nav-logo{font-size:11.5px}
+  .nav-btn{padding:6px 13px;font-size:10px}
+
+  /* HERO */
+  #hero{padding-top:50px}
+  .hero-meta{padding:22px 16px 20px}
+  .hero-meta-val{font-size:19px}
+  .hero-meta-bottom{gap:16px}
+  .mini-stat-n{font-size:26px}
+  .mini-stat-l{font-size:9.5px}
+  .hero-canvas-wrap{height:180px}
+  .hero-title-row{padding:22px 16px 28px}
+  h1{font-size:clamp(36px,12.5vw,54px)}
+  .pre{font-size:9.5px;letter-spacing:.14em}
+  .hero-sub{font-size:13.5px}
+  .btn-y,.btn-ghost{width:100%;text-align:center;justify-content:center}
+  .hero-actions{width:100%}
+
+  /* SECTIONS */
+  .sec{padding:40px 16px}
+  .sec-header{margin-bottom:28px}
+  h2{font-size:clamp(26px,9vw,44px)}
+  .sec-num{font-size:10px}
+
+  /* AUDIENCE */
+  .aud-cell,.stat-cell{padding:24px 18px}
+  .aud-cell h3{font-size:18px}
+  .aud-cell p{font-size:13.5px}
+  .big-stat{font-size:52px}
+  .big-stat-label{font-size:13px}
+
+  /* PROGRAMME */
+  .prog-info{padding:20px 16px}
+  .mod-btn{
+    grid-template-columns:32px 1fr 24px;
+    gap:10px;padding:14px 16px;
+  }
+  .mod-title{font-size:13px}
+  .mod-body{padding:0 16px 14px 58px;font-size:13px}
+
+  /* FORMAT */
+  .fmt-cell{padding:28px 18px}
+  .fmt-cell h3{font-size:20px}
+  .fmt-cell p{font-size:13.5px}
+
+  /* RESULTS */
+  .res-row{grid-template-columns:48px 1fr;padding:18px 0}
+  .res-row-n{font-size:28px}
+  .res-body h3{font-size:15px}
+
+  /* INSTRUCTORS */
+  .icard-art{height:170px}
+  .icard-body{padding:18px 20px 24px}
+  .icard-name{font-size:17px}
+
+  /* TESTIMONIALS */
+  .tcard{padding:22px 18px}
+  .tcard-q{font-size:14px}
+
+  /* CTA */
+  .cta-left{padding:40px 16px 28px}
+  .cta-right{padding:28px 16px 40px}
+  .cta-title{font-size:clamp(32px,11vw,52px)}
+  .btn-y-big,.btn-ghost-big{font-size:11.5px;padding:14px 16px;width:100%;text-align:center}
+  .cta-actions{gap:10px}
+
+  /* FOOTER */
+  .footer-main{grid-template-columns:1fr}
+  footer{padding:0 16px}
+  .footer-col{padding:22px 0}
+  .footer-logo-big{font-size:22px}
+  .footer-bot p{font-size:11px}
+  .footer-bot-links a{font-size:11px}
 }
 </style>
 </head>
