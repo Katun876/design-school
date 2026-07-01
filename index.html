@@ -120,13 +120,18 @@ nav{
 }
 .pre::before{content:'';display:block;width:28px;height:1px;background:var(--y)}
 h1{
-  font-size:clamp(48px,7.8vw,220px);font-weight:900;line-height:.93;
-  letter-spacing:-.05em;text-transform:uppercase;
-  width:100%;white-space:nowrap;
+  font-weight:900;line-height:.93;letter-spacing:-.05em;
+  text-transform:uppercase;width:100%;font-size:inherit;
 }
-@media(max-width:900px){
-  h1{white-space:normal}
+.h1-line1{
+  display:block;font-size:var(--h1-size,13vw);
+  line-height:.93;letter-spacing:-.05em;
 }
+.h1-line2{
+  display:block;font-size:clamp(32px,6.5vw,112px);
+  line-height:1;letter-spacing:-.04em;margin-top:.06em;
+}
+h1 em{font-style:italic;font-weight:300;letter-spacing:-.03em}
 h1 em{font-style:italic;font-weight:300;letter-spacing:-.03em}
 .hero-cta-row{
   display:flex;align-items:flex-end;justify-content:space-between;
@@ -740,7 +745,7 @@ footer{
 
   <div class="hero-title-row">
     <div class="pre">UI/UX · Дизайн-школа · Старт сентябрь 2026</div>
-    <h1>Интерфейсный <em>дизайн</em> с нуля.</h1>
+    <h1><span class="h1-line1">Интерфейсный</span><span class="h1-line2"><em>дизайн</em> с нуля.</span></h1>
     <div class="hero-cta-row">
       <p class="hero-sub">Освоите Figma, проведёте исследования, соберёте портфолио — с живыми наставниками и групповыми разборами.</p>
       <div class="hero-actions">
@@ -1109,6 +1114,23 @@ footer{
 </footer>
 
 <script>
+/* FIT TITLE LINE 1 */
+function fitH1(){
+  const line=document.querySelector('.h1-line1');
+  if(!line) return;
+  const parent=line.parentElement;
+  const w=parent.offsetWidth;
+  let lo=40,hi=400,mid;
+  while(lo<hi-1){
+    mid=Math.floor((lo+hi)/2);
+    line.style.fontSize=mid+'px';
+    if(line.scrollWidth<=w) lo=mid; else hi=mid;
+  }
+  line.style.fontSize=lo+'px';
+}
+fitH1();
+window.addEventListener('resize',fitH1);
+
 /* CURSOR */
 const cur=document.getElementById('cur'), ring=document.getElementById('curRing');
 let mx=0,my=0,rx=0,ry=0;
