@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DesignSchool — UI/UX с нуля до портфолио</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0c0b0a;
+  --paper:#f5f2ee;
+  --y:#ffe135;
+  --r:#e63322;
+  --mid:#6b6760;
+  --line:rgba(12,11,10,.12);
+  --line-w:rgba(245,242,238,.1);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--ink);color:var(--paper);
+  font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  cursor:none;
+}
+a{color:inherit;text-decoration:none}
+
+/* ── CURSOR ── */
+.cursor{
+  position:fixed;width:8px;height:8px;
+  background:var(--y);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .2s,height .2s,background .2s;
+}
+.cursor-ring{
+  position:fixed;width:36px;height:36px;
+  border:1px solid rgba(255,225,53,.4);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:all .12s ease-out;
+}
+body:has(a:hover) .cursor,body:has(button:hover) .cursor{width:14px;height:14px;background:var(--r)}
+body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:54px;height:54px;border-color:rgba(230,51,34,.3)}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  padding:0 36px;height:56px;
+  border-bottom:1px solid var(--line-w);
+  background:rgba(12,11,10,.92);
+  backdrop-filter:blur(12px);
+}
+.nav-left{display:flex;gap:28px;align-items:center}
+.nav-left a{font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,242,238,.45);transition:.15s}
+.nav-left a:hover{color:var(--paper)}
+.nav-logo{
+  font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+  text-align:center;color:var(--paper);
+}
+.nav-logo span{color:var(--y)}
+.nav-right{display:flex;justify-content:flex-end;align-items:center;gap:16px}
+.nav-tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,238,.3)}
+.nav-btn{
+  font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:8px 18px;border:1px solid var(--y);border-radius:2px;
+  color:var(--y);background:transparent;cursor:none;font-family:inherit;
+  transition:.15s;
+}
+.nav-btn:hover{background:var(--y);color:var(--ink)}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;padding:56px 0 0;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+}
+.hero-top{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--line-w);
+}
+.hero-meta{
+  padding:48px 36px;
+  border-right:1px solid var(--line-w);
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.hero-meta-label{
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(245,242,238,.35);margin-bottom:8px;
+}
+.hero-meta-val{font-size:28px;font-weight:900;letter-spacing:-.03em;color:var(--paper)}
+.hero-meta-val span{color:var(--y)}
+.hero-meta-bottom{display:flex;gap:32px}
+.mini-stat{}
+.mini-stat-n{font-size:36px;font-weight:900;letter-spacing:-.04em;color:var(--paper)}
+.mini-stat-l{font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid)}
+
+.hero-canvas-wrap{
+  padding:0;position:relative;overflow:hidden;
+  background:#080807;
+}
+#heroCanvas{display:block;width:100%;height:100%}
+
+/* TITLE BLOCK */
+.hero-title-row{
+  padding:52px 36px 44px;
+  border-bottom:1px solid var(--line-w);
+  position:relative;
+}
+.pre{
+  font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--y);margin-bottom:20px;display:flex;align-items:center;gap:12px;
+}
+.pre::before{content:'';display:block;width:28px;height:1px;background:var(--y)}
+h1{
+  font-size:clamp(60px,8.5vw,128px);font-weight:900;line-height:.96;
+  letter-spacing:-.045em;text-transform:uppercase;
+  max-width:900px;
+}
+h1 em{font-style:italic;font-weight:300;letter-spacing:-.03em}
+.hero-cta-row{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-top:40px;gap:32px;
+}
+.hero-sub{font-size:15px;color:rgba(245,242,238,.5);line-height:1.65;max-width:380px}
+.hero-actions{display:flex;gap:12px;flex-shrink:0}
+.btn-y{
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:14px 28px;background:var(--y);color:var(--ink);
+  border:none;border-radius:2px;cursor:none;font-family:inherit;transition:.15s;
+}
+.btn-y:hover{background:#ffd100}
+.btn-ghost{
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:14px 24px;background:transparent;color:rgba(245,242,238,.5);
+  border:1px solid rgba(245,242,238,.15);border-radius:2px;
+  cursor:none;font-family:inherit;transition:.15s;
+}
+.btn-ghost:hover{color:var(--paper);border-color:rgba(245,242,238,.4)}
+
+/* ── SECTION SHELL ── */
+.sec{border-top:1px solid var(--line-w);padding:80px 36px;max-width:none}
+.sec-header{
+  display:grid;grid-template-columns:auto 1fr auto;
+  align-items:baseline;gap:24px;margin-bottom:64px;
+  padding-bottom:20px;border-bottom:1px solid var(--line-w);
+}
+.sec-num{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
+h2{
+  font-size:clamp(36px,5vw,72px);font-weight:900;
+  letter-spacing:-.04em;text-transform:uppercase;line-height:.95;
+}
+h2 em{font-style:italic;font-weight:300}
+.sec-count{
+  font-size:72px;font-weight:900;letter-spacing:-.05em;
+  color:rgba(245,242,238,.08);line-height:1;
+}
+
+/* ── AUDIENCE ── */
+.aud-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--line-w);
+  border:1px solid var(--line-w);
+}
+.aud-cell{
+  background:var(--ink);padding:44px 36px;
+  position:relative;overflow:hidden;
+  transition:.3s;
+}
+.aud-cell:hover{background:#141311}
+.aud-cell-n{
+  font-size:100px;font-weight:900;letter-spacing:-.05em;
+  color:rgba(245,242,238,.04);line-height:1;
+  position:absolute;right:20px;bottom:-10px;
+}
+.aud-tag{
+  display:inline-block;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--y);border:1px solid rgba(255,225,53,.3);
+  padding:4px 10px;border-radius:1px;margin-bottom:24px;
+}
+.aud-cell h3{
+  font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px;
+  line-height:1.2;
+}
+.aud-cell p{font-size:14px;color:rgba(245,242,238,.45);line-height:1.65}
+.aud-cell-accent{background:#100f0e;border-color:rgba(255,225,53,.12)}
+
+/* STAT CELL */
+.stat-cell{
+  background:#0f0e0c;padding:44px 36px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.big-stat{font-size:88px;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--y);margin-bottom:12px}
+.big-stat-label{font-size:14px;color:rgba(245,242,238,.4);line-height:1.55;max-width:200px}
+
+/* ── PROGRAMME ── */
+.prog-grid{display:grid;grid-template-columns:320px 1fr;gap:0;border:1px solid var(--line-w)}
+.prog-info{
+  padding:48px 36px;border-right:1px solid var(--line-w);
+  position:sticky;top:56px;height:fit-content;
+}
+.prog-info p{font-size:14px;color:rgba(245,242,238,.45);line-height:1.7;margin-top:14px;margin-bottom:32px}
+.prog-chips{display:flex;flex-direction:column;gap:1px;background:var(--line-w)}
+.prog-chip{
+  background:var(--ink);padding:14px 0;
+  display:flex;gap:12px;align-items:center;
+  font-size:12.5px;color:rgba(245,242,238,.4);
+}
+.prog-chip-dot{width:4px;height:4px;border-radius:50%;background:var(--y);flex-shrink:0}
+
+/* MODULES */
+.mods-list{border-left:none}
+.mod{border-bottom:1px solid var(--line-w)}
+.mod:last-child{border-bottom:none}
+.mod-btn{
+  width:100%;background:none;border:none;font-family:inherit;
+  display:grid;grid-template-columns:52px 1fr auto 32px;
+  align-items:center;gap:16px;padding:20px 28px;
+  cursor:none;text-align:left;transition:.15s;
+}
+.mod-btn:hover{background:rgba(255,225,53,.03)}
+.mod.open .mod-btn{background:rgba(255,225,53,.04)}
+.mod-n{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--mid)}
+.mod-title{font-size:14px;font-weight:600;letter-spacing:-.01em;color:var(--paper)}
+.mod-dur{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mid)}
+.mod-arr{font-size:18px;color:var(--mid);transition:.2s;text-align:center}
+.mod.open .mod-arr{transform:rotate(180deg);color:var(--y)}
+.mod-body{
+  display:none;padding:0 28px 22px calc(52px + 28px + 16px);
+  font-size:13.5px;color:rgba(245,242,238,.4);line-height:1.7;
+}
+.mod.open .mod-body{display:block}
+
+/* ── FORMAT ── */
+.fmt-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-w);border:1px solid var(--line-w);margin-top:0}
+.fmt-cell{background:var(--ink);padding:52px 40px;position:relative;overflow:hidden}
+.fmt-cell:hover{background:#111009}
+.fmt-n{
+  font-size:120px;font-weight:900;letter-spacing:-.06em;
+  color:rgba(245,242,238,.04);line-height:1;
+  position:absolute;right:-8px;bottom:-16px;
+}
+.fmt-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--y);margin-bottom:20px}
+.fmt-cell h3{font-size:24px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px;line-height:1.2}
+.fmt-cell p{font-size:14px;color:rgba(245,242,238,.4);line-height:1.65}
+
+/* ── RESULTS ── */
+.res-list{display:flex;flex-direction:column;gap:1px;background:var(--line-w);border:1px solid var(--line-w)}
+.res-row{
+  background:var(--ink);
+  display:grid;grid-template-columns:100px 1fr auto;
+  align-items:center;gap:0;
+  padding:36px 0;
+  border-bottom:none;
+  transition:.2s;
+  overflow:hidden;
+}
+.res-row:hover{background:#111009}
+.res-row-n{
+  font-size:48px;font-weight:900;letter-spacing:-.05em;
+  color:rgba(245,242,238,.12);text-align:center;line-height:1;
+}
+.res-row:hover .res-row-n{color:var(--y)}
+.res-body{padding:0 40px 0 0}
+.res-body h3{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.res-body p{font-size:14px;color:rgba(245,242,238,.4);line-height:1.6}
+.res-arrow{padding-right:40px;font-size:24px;color:rgba(245,242,238,.12);transition:.2s}
+.res-row:hover .res-arrow{color:var(--y);transform:translateX(4px)}
+
+/* ── INSTRUCTORS ── */
+.inst-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--line-w);border:1px solid var(--line-w);
+}
+.icard{background:var(--ink);overflow:hidden;transition:.3s;position:relative}
+.icard:hover{background:#111009}
+.icard-art{height:220px;position:relative;overflow:hidden}
+.icard-art canvas{position:absolute;inset:0;width:100%;height:100%}
+.icard-art-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 50%,var(--ink) 100%);
+  pointer-events:none;
+}
+.icard:hover .icard-art-overlay{background:linear-gradient(to bottom,transparent 50%,#111009 100%)}
+.icard-body{padding:24px 28px 32px}
+.icard-role{
+  font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--y);margin-bottom:8px;
+}
+.icard-name{font-size:20px;font-weight:700;letter-spacing:-.025em;margin-bottom:10px}
+.icard-desc{font-size:13.5px;color:rgba(245,242,238,.4);line-height:1.6;margin-bottom:16px}
+.icard-tags{display:flex;flex-wrap:wrap;gap:6px}
+.itag{
+  font-size:10.5px;font-weight:600;letter-spacing:.06em;
+  padding:4px 10px;border-radius:1px;
+  background:rgba(245,242,238,.06);color:rgba(245,242,238,.4);
+  border:1px solid rgba(245,242,238,.08);
+}
+
+/* ── TESTIMONIALS ── */
+.testi-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--line-w);border:1px solid var(--line-w);
+}
+.tcard{background:var(--ink);padding:40px 36px;transition:.2s;position:relative}
+.tcard:hover{background:#111009}
+.tcard-q{
+  font-size:16px;font-style:italic;font-weight:300;
+  color:rgba(245,242,238,.7);line-height:1.75;
+  margin-bottom:28px;
+}
+.tcard-divider{width:32px;height:1px;background:var(--y);margin-bottom:24px}
+.tcard-author{display:flex;align-items:center;gap:16px}
+.tcard-av{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  position:relative;overflow:hidden;
+}
+.av1{background:linear-gradient(135deg,#7c3aed,#ec4899)}
+.av2{background:linear-gradient(135deg,#0891b2,#059669)}
+.av3{background:linear-gradient(135deg,#d97706,#dc2626)}
+.av4{background:linear-gradient(135deg,#4f46e5,#0891b2)}
+.tcard-av::after{content:'';position:absolute;inset:8px;border-radius:50%;background:rgba(255,255,255,.18)}
+.tcard-name{font-size:13px;font-weight:700;letter-spacing:-.01em}
+.tcard-meta{font-size:11.5px;color:var(--mid);margin-top:2px}
+.tcard-journey{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:700;letter-spacing:.06em;
+  color:var(--mid);margin-top:5px;
+}
+.tcard-journey b{color:var(--y)}
+
+/* ── CTA ── */
+.cta-block{
+  border-top:1px solid var(--line-w);
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:400px;
+}
+.cta-left{
+  padding:72px 36px;
+  border-right:1px solid var(--line-w);
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.cta-title{
+  font-size:clamp(42px,5.5vw,80px);font-weight:900;
+  letter-spacing:-.045em;text-transform:uppercase;line-height:.95;
+}
+.cta-title em{font-style:italic;font-weight:300}
+.cta-right{
+  padding:72px 36px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  background:#0f0e0d;
+}
+.cta-right p{font-size:16px;color:rgba(245,242,238,.45);line-height:1.7;max-width:400px}
+.cta-actions{display:flex;flex-direction:column;gap:12px}
+.btn-y-big{
+  font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:18px 28px;background:var(--y);color:var(--ink);
+  border:none;border-radius:2px;cursor:none;font-family:inherit;
+  transition:.15s;text-align:center;
+}
+.btn-y-big:hover{background:#ffd100}
+.btn-ghost-big{
+  font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:17px 28px;background:transparent;color:rgba(245,242,238,.4);
+  border:1px solid rgba(245,242,238,.12);border-radius:2px;
+  cursor:none;font-family:inherit;transition:.15s;text-align:center;
+}
+.btn-ghost-big:hover{color:var(--paper);border-color:rgba(245,242,238,.35)}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--line-w);
+  padding:0 36px 0;
+}
+.footer-main{
+  display:grid;grid-template-columns:1fr 1fr 1fr 1fr;
+  gap:1px;background:var(--line-w);
+  border-bottom:1px solid var(--line-w);
+}
+.footer-col{padding:40px 32px}
+.footer-col-title{
+  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mid);margin-bottom:20px;
+}
+.footer-col a{
+  display:block;font-size:13.5px;color:rgba(245,242,238,.45);
+  margin-bottom:10px;transition:.15s;
+}
+.footer-col a:hover{color:var(--paper)}
+.footer-logo-col{display:flex;flex-direction:column;justify-content:space-between}
+.footer-logo-big{
+  font-size:38px;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;
+  color:var(--paper);line-height:1;
+}
+.footer-logo-big span{color:var(--y)}
+.footer-tagline{font-size:12px;color:var(--mid);margin-top:8px}
+.footer-bot{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 0;
+}
+.footer-bot p{font-size:11.5px;color:var(--mid);letter-spacing:.04em}
+.footer-bot-links{display:flex;gap:24px}
+.footer-bot-links a{font-size:11.5px;color:var(--mid);transition:.15s}
+.footer-bot-links a:hover{color:var(--paper)}
+
+@media(max-width:900px){
+  nav{grid-template-columns:1fr auto;padding:0 20px}
+  .nav-left{display:none}
+  .nav-right .nav-tag{display:none}
+  #hero{padding-top:56px}
+  .hero-top,.hero-title-row{padding:32px 20px}
+  .hero-top{grid-template-columns:1fr}
+  .hero-canvas-wrap{height:240px}
+  .hero-cta-row{flex-direction:column;align-items:flex-start}
+  .sec{padding:56px 20px}
+  .aud-grid,.fmt-row,.inst-grid,.testi-grid{grid-template-columns:1fr}
+  .prog-grid{grid-template-columns:1fr}
+  .prog-info{position:static}
+  .res-row{grid-template-columns:60px 1fr}
+  .res-arrow{display:none}
+  .cta-block{grid-template-columns:1fr}
+  .footer-main{grid-template-columns:1fr 1fr}
+  footer{padding:0 20px}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="#audience">Для кого</a>
+    <a href="#programme">Программа</a>
+    <a href="#format">Формат</a>
+    <a href="#instructors">Наставники</a>
+  </div>
+  <div class="nav-logo">Design<span>S</span>chool</div>
+  <div class="nav-right">
+    <span class="nav-tag">Набор открыт</span>
+    <button class="nav-btn" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Записаться</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-top">
+    <div class="hero-meta">
+      <div>
+        <div class="hero-meta-label">Ключевое обещание</div>
+        <div class="hero-meta-val">Портфолио из <span>4 проектов</span><br>за 4 месяца</div>
+      </div>
+      <div class="hero-meta-bottom">
+        <div class="mini-stat"><div class="mini-stat-n">10</div><div class="mini-stat-l">Модулей</div></div>
+        <div class="mini-stat"><div class="mini-stat-n">82%</div><div class="mini-stat-l">Трудоустройство</div></div>
+        <div class="mini-stat"><div class="mini-stat-n">3+</div><div class="mini-stat-l">Наставника</div></div>
+      </div>
+    </div>
+    <div class="hero-canvas-wrap">
+      <canvas id="heroCanvas"></canvas>
+    </div>
+  </div>
+
+  <div class="hero-title-row">
+    <div class="pre">UI/UX · Дизайн-школа · Старт сентябрь 2026</div>
+    <h1>Интер&shy;фейс&shy;ный<br><em>дизайн</em><br>с нуля.</h1>
+    <div class="hero-cta-row">
+      <p class="hero-sub">Освоите Figma, проведёте исследования, соберёте портфолио — с живыми наставниками и групповыми разборами.</p>
+      <div class="hero-actions">
+        <button class="btn-y" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Бесплатный урок →</button>
+        <button class="btn-ghost" onclick="document.getElementById('programme').scrollIntoView({behavior:'smooth'})">Программа</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="audience" class="sec">
+  <div class="sec-header">
+    <span class="sec-num">01 / 05</span>
+    <h2>Для <em>кого</em><br>этот курс</h2>
+    <span class="sec-count">3</span>
+  </div>
+  <div class="aud-grid">
+    <div class="aud-cell">
+      <div class="aud-tag">С нуля</div>
+      <h3>Смена профессии<br>без опыта</h3>
+      <p>Разберём с основ: принципы восприятия, Figma, процесс. До готового портфолио, даже если вы никогда не открывали дизайн-инструмент.</p>
+      <div class="aud-cell-n">01</div>
+    </div>
+    <div class="aud-cell">
+      <div class="aud-tag">Смежные</div>
+      <h3>Маркетологи<br>и разработчики</h3>
+      <p>Дизайн + смежная экспертиза = редкий и дорогой специалист. Научитесь проектировать то, что потом реализуете или продвигаете.</p>
+      <div class="aud-cell-n">02</div>
+    </div>
+    <div class="aud-cell aud-cell-accent">
+      <div class="aud-tag">Практики</div>
+      <h3>Систематизация<br>и рост</h3>
+      <p>Уже работаете дизайнером интуитивно? Выстроим методологию, прокачаем аргументацию и усилим портфолио.</p>
+      <div class="aud-cell-n">03</div>
+    </div>
+    <div class="stat-cell" style="grid-column:1/3">
+      <div class="big-stat">82%</div>
+      <div class="big-stat-label">выпускников трудоустраиваются или получают первые заказы в течение 3 месяцев после курса</div>
+    </div>
+    <div class="aud-cell" style="background:#0d0c0b">
+      <div class="aud-tag">Результат</div>
+      <h3>4 проекта<br>в портфолио</h3>
+      <p>Лендинг, мобильное приложение, дизайн-система, финальный кейс — готовая база для поиска работы.</p>
+      <div class="aud-cell-n">04</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMME -->
+<section id="programme" class="sec">
+  <div class="sec-header">
+    <span class="sec-num">02 / 05</span>
+    <h2>Программа<br><em>10 модулей</em></h2>
+    <span class="sec-count">10</span>
+  </div>
+  <div class="prog-grid">
+    <div class="prog-info">
+      <div>
+        <p>Каждый модуль — теория, практическое задание с обратной связью и групповой разбор работ.</p>
+      </div>
+      <div class="prog-chips">
+        <div class="prog-chip"><div class="prog-chip-dot"></div>4 месяца · 16 недель</div>
+        <div class="prog-chip"><div class="prog-chip-dot"></div>Figma + исследования + системы</div>
+        <div class="prog-chip"><div class="prog-chip-dot"></div>Живая обратная связь</div>
+        <div class="prog-chip"><div class="prog-chip-dot"></div>Финал — кейс в портфолио</div>
+      </div>
+    </div>
+    <div class="mods-list">
+      <div class="mod open">
+        <button class="mod-btn" onclick="toggleMod(this)">
+          <span class="mod-n">01</span><span class="mod-title">Введение в UI/UX и инструменты</span>
+          <span class="mod-dur">1 нед</span><span class="mod-arr">⌄</span>
+        </button>
+        <div class="mod-body">Профессия UI/UX изнутри. Осваиваем Figma: фреймы, слои, автолэйаут, компоненты, стили. Первый прототип.</div>
+      </div>
+      <div class="mod">
+        <button class="mod-btn" onclick="toggleMod(this)">
+          <span class="mod-n">02</span><span class="mod-title">Типографика, цвет, сетка</span>
+          <span class="mod-dur">1 нед</span><span class="mod-arr">⌄</span>
+        </button>
+        <div class="mod-body">Законы визуального восприятия, шрифтовая шкала, цветовые системы, сетки. Воссоздаём реальный интерфейс с нуля.</div>
+      </div>
+      <div class="mod">
+        <button class="mod-btn" onclick="toggleMod(this)">
+          <span class="mod-n">03</span><span class="mod-title">Пользовательские исследования</span>
+          <span class="mod-dur">1 нед</span><span class="mod-arr">⌄</span>
+        </button>
+        <div class="mod-body">User interviews, анкетирование, конкурентный анализ. Переводим инсайты в дизайн-решения.</div>
+      </div>
+      <div class="mod">
+        <button class="mod-btn" onclick="toggleMod(this)">
+          <span class="mod-n">04</span><span class="mod-title">ИА и вайрфреймы</span>
+          <span class="mod-dur">1 нед</span><span class="mod-arr">⌄</span>
+        </button>
+        <div class="mod-body">Информационная архитектура, навигация, lo-fi прототипы для быстрой проверки идей.</div>
+      </div>
+      <div class="mod">
+        <button class="mod-btn" onclick="toggleMod(this)">
+          <span class="mod-n">05</span><span class="mod-title">UI-компоненты и дизайн-системы</span>
+          <span class="mod-dur">2 нед</span><span class="mod-arr">⌄</span>
+        </button>
+        <div class="mod-body">Атомарный дизайн, компонентная библиотека в Figma. Строим полноценную дизайн-систему с нуля.</div>
+      </div>
+      <div class="mod">
+        <button class="mod-btn" onclick="toggleMod(this)">
+          <span class="mod-n">06</span><span class="mod-title">Прототипирование и микроанимации</span>
+          <span class="mod-dur">1 нед</span><span class="mod-arr">⌄</span>
+        </button>
+        <div class="mod-body">Интерактивные прототипы, переходы, motion-принципы. Как добавить жизнь без лишней сложности.</div>
+      </div>
+      <div class="mod">
+        <button class="mod-btn" onclick="toggleMod(this)">
+          <span class="mod-n">07</span><span class="mod-title">Юзабилити-тестирование</span>
+          <span class="mod-dur">1 нед</span><span class="mod-arr">⌄</span>
+        </button>
+        <div class="mod-body">Тестируем прототипы с реальными пользователями, анализируем, приоритизируем правки.</div>
+      </div>
+      <div class="mod">
+        <button class="mod-btn" onclick="toggleMod(this)">
+          <span class="mod-n">08</span><span class="mod-title">Адаптивный и мобильный дизайн</span>
+          <span class="mod-dur">1 нед</span><span class="mod-arr">⌄</span>
+        </button>
+        <div class="mod-body">Mobile-first, breakpoints, адаптация компонентов. Делаем мобильное приложение для портфолио.</div>
+      </div>
+      <div class="mod">
+        <button class="mod-btn" onclick="toggleMod(this)">
+          <span class="mod-n">09</span><span class="mod-title">Дизайн-системы и handoff</span>
+          <span class="mod-dur">1 нед</span><span class="mod-arr">⌄</span>
+        </button>
+        <div class="mod-body">Передача макетов разработчикам, документация, Inspect. Говорим с командой на одном языке.</div>
+      </div>
+      <div class="mod">
+        <button class="mod-btn" onclick="toggleMod(this)">
+          <span class="mod-n">10</span><span class="mod-title">Финальный проект и портфолио</span>
+          <span class="mod-dur">2 нед</span><span class="mod-arr">⌄</span>
+        </button>
+        <div class="mod-body">Самостоятельный проект от ресёрча до макетов. Оформляем кейс с контекстом, проблематикой, аргументацией.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMAT -->
+<section id="format" class="sec">
+  <div class="sec-header">
+    <span class="sec-num">03 / 05</span>
+    <h2>Три опоры<br><em>каждого модуля</em></h2>
+    <span class="sec-count">3</span>
+  </div>
+  <div class="fmt-row">
+    <div class="fmt-cell">
+      <div class="fmt-label">01 · Теория</div>
+      <h3>Короткие уроки без воды</h3>
+      <p>Видео или живые занятия — только то, что нужно для практики. Никакой лишней теории.</p>
+      <div class="fmt-n">T</div>
+    </div>
+    <div class="fmt-cell">
+      <div class="fmt-label">02 · Практика</div>
+      <h3>Задание с наставником</h3>
+      <p>Реальное задание по теме модуля. Наставник даёт персональную обратную связь на каждую работу.</p>
+      <div class="fmt-n">P</div>
+    </div>
+    <div class="fmt-cell">
+      <div class="fmt-label">03 · Разбор</div>
+      <h3>Групповое обсуждение</h3>
+      <p>Работы разбираются вместе с группой. Учитесь аргументировать и видеть дизайн критически.</p>
+      <div class="fmt-n">R</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results" class="sec">
+  <div class="sec-header">
+    <span class="sec-num">04 / 05</span>
+    <h2>Что вы<br><em>получите</em></h2>
+    <span class="sec-count">4</span>
+  </div>
+  <div class="res-list">
+    <div class="res-row">
+      <div class="res-row-n">01</div>
+      <div class="res-body">
+        <h3>Портфолио из 3–4 проектов</h3>
+        <p>Лендинг, мобильное приложение, дизайн-система, финальный кейс — разные типы работ для разных вакансий.</p>
+      </div>
+      <div class="res-arrow">→</div>
+    </div>
+    <div class="res-row">
+      <div class="res-row-n">02</div>
+      <div class="res-body">
+        <h3>Уверенная работа в Figma</h3>
+        <p>Компоненты, переменные, автолэйаут, интерактивные прототипы — полный инструментарий профессионала.</p>
+      </div>
+      <div class="res-arrow">→</div>
+    </div>
+    <div class="res-row">
+      <div class="res-row-n">03</div>
+      <div class="res-body">
+        <h3>Навык юзабилити-тестирования</h3>
+        <p>Умеете самостоятельно проводить тесты, находить проблемы и обосновывать решения данными.</p>
+      </div>
+      <div class="res-arrow">→</div>
+    </div>
+    <div class="res-row">
+      <div class="res-row-n">04</div>
+      <div class="res-body">
+        <h3>Аргументация решений</h3>
+        <p>Насмотренность и умение объяснить дизайн-решение — ключевое при работе в команде и на собеседовании.</p>
+      </div>
+      <div class="res-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUCTORS -->
+<section id="instructors" class="sec">
+  <div class="sec-header">
+    <span class="sec-num">05 / 05</span>
+    <h2>Наставники —<br><em>практики</em></h2>
+    <span class="sec-count">3</span>
+  </div>
+  <div class="inst-grid">
+    <div class="icard">
+      <div class="icard-art">
+        <canvas class="instrCanvas" data-seed="1"></canvas>
+        <div class="icard-art-overlay"></div>
+      </div>
+      <div class="icard-body">
+        <div class="icard-role">Lead Product Designer</div>
+        <div class="icard-name">Наставник · Продукт</div>
+        <div class="icard-desc">8 лет в продуктовом дизайне. Финтех и e-commerce с аудиторией 1M+ пользователей.</div>
+        <div class="icard-tags"><span class="itag">Figma</span><span class="itag">Системы</span><span class="itag">Handoff</span></div>
+      </div>
+    </div>
+    <div class="icard">
+      <div class="icard-art">
+        <canvas class="instrCanvas" data-seed="2"></canvas>
+        <div class="icard-art-overlay"></div>
+      </div>
+      <div class="icard-body">
+        <div class="icard-role">Senior UX Researcher</div>
+        <div class="icard-name">Наставник · Research</div>
+        <div class="icard-desc">400+ интервью с пользователями. Специалист по исследованиям в IT и EdTech.</div>
+        <div class="icard-tags"><span class="itag">Research</span><span class="itag">Интервью</span><span class="itag">Usability</span></div>
+      </div>
+    </div>
+    <div class="icard">
+      <div class="icard-art">
+        <canvas class="instrCanvas" data-seed="3"></canvas>
+        <div class="icard-art-overlay"></div>
+      </div>
+      <div class="icard-body">
+        <div class="icard-role">Art Director</div>
+        <div class="icard-name">Наставник · Визуал</div>
+        <div class="icard-desc">Арт-директор, визуальные системы. Работал с брендами из топ-100 рунета.</div>
+        <div class="icard-tags"><span class="itag">Визуал</span><span class="itag">Типографика</span><span class="itag">Motion</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS inside instructors section -->
+  <div style="margin-top:1px">
+  <div class="testi-grid">
+    <div class="tcard">
+      <div class="tcard-q">«За 4 месяца перешла из маркетинга в дизайн. Групповые разборы — отдельный уровень: начинаешь видеть решения, которых раньше не замечала.»</div>
+      <div class="tcard-divider"></div>
+      <div class="tcard-author">
+        <div class="tcard-av av1"></div>
+        <div><div class="tcard-name">Анна К.</div><div class="tcard-meta">Поток 3</div>
+        <div class="tcard-journey">Маркетолог <b>→</b> Junior UI Designer</div></div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-q">«Думал, что дизайн не для меня — я фронтендер. Оказалось, всё применимо. Теперь могу и спроектировать, и реализовать.»</div>
+      <div class="tcard-divider"></div>
+      <div class="tcard-author">
+        <div class="tcard-av av2"></div>
+        <div><div class="tcard-name">Дмитрий В.</div><div class="tcard-meta">Поток 2</div>
+        <div class="tcard-journey">Frontend dev <b>→</b> Fullstack + Design</div></div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-q">«Обратная связь наставника на каждую работу — не просто "хорошо/плохо", а конкретно: что исправить и почему.»</div>
+      <div class="tcard-divider"></div>
+      <div class="tcard-author">
+        <div class="tcard-av av3"></div>
+        <div><div class="tcard-name">Мария С.</div><div class="tcard-meta">Поток 4</div>
+        <div class="tcard-journey">Без опыта <b>→</b> Product Designer</div></div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-q">«Уже работал дизайнером, но интуитивно. Курс систематизировал всё — теперь объясняю любое решение на языке UX.»</div>
+      <div class="tcard-divider"></div>
+      <div class="tcard-author">
+        <div class="tcard-av av4"></div>
+        <div><div class="tcard-name">Алексей Р.</div><div class="tcard-meta">Поток 1</div>
+        <div class="tcard-journey">Дизайнер <b>→</b> Middle UI/UX</div></div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div id="cta" class="cta-block">
+  <div class="cta-left">
+    <div class="cta-title">Начните<br>с бес&shy;плат&shy;ного<br><em>урока</em></div>
+    <div style="font-size:13px;color:var(--mid);letter-spacing:.06em">DesignSchool · 2026 · Набор открыт</div>
+  </div>
+  <div class="cta-right">
+    <p>Познакомьтесь с программой, наставником и форматом — без обязательств и без оплаты. Старт в сентябре 2026.</p>
+    <div class="cta-actions">
+      <button class="btn-y-big">Записаться на бесплатный урок →</button>
+      <button class="btn-ghost-big">Задать вопрос</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-col footer-logo-col">
+      <div class="footer-logo-big">Design<span>S</span>chool</div>
+      <div class="footer-tagline">Интерфейсный дизайн —<br>от основ до профессии</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Курс</div>
+      <a href="#programme">Программа</a>
+      <a href="#format">Формат обучения</a>
+      <a href="#results">Результаты</a>
+      <a href="#instructors">Наставники</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Школа</div>
+      <a href="#">О нас</a>
+      <a href="#">Портфолио выпускников</a>
+      <a href="#">Блог</a>
+      <a href="#">Партнёрам</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Контакты</div>
+      <a href="#">Telegram</a>
+      <a href="#">Instagram</a>
+      <a href="#">hello@designschool.ru</a>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <p>© 2026 DesignSchool. Все права защищены.</p>
+    <div class="footer-bot-links">
+      <a href="#">Политика конфиденциальности</a>
+      <a href="#">Оферта</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur'), ring=document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+
+/* ACCORDION */
+function toggleMod(btn){btn.closest('.mod').classList.toggle('open')}
+
+/* HERO CANVAS — monochrome wireframe aesthetic */
+(function(){
+  const cv=document.getElementById('heroCanvas');
+  if(!cv)return;
+  const cx=cv.getContext('2d');
+  function resize(){cv.width=cv.offsetWidth*devicePixelRatio;cv.height=cv.offsetHeight*devicePixelRatio;cx.scale(devicePixelRatio,devicePixelRatio)}
+  resize();window.addEventListener('resize',resize);
+  const W=()=>cv.offsetWidth,H=()=>cv.offsetHeight;
+
+  /* Particle field */
+  const pts=[];
+  for(let i=0;i<90;i++) pts.push({
+    x:Math.random()*W(),y:Math.random()*H(),
+    vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,
+    r:Math.random()*1.5+.5
+  });
+
+  /* 3D sphere wireframe */
+  function sphere(ox,oy,R,t){
+    const LAT=14, LON=20;
+    const v=[];
+    for(let la=0;la<=LAT;la++){
+      const phi=la/LAT*Math.PI;
+      for(let lo=0;lo<LON;lo++){
+        const theta=lo/LON*Math.PI*2+t*.4;
+        const x=R*Math.sin(phi)*Math.cos(theta);
+        const y=R*Math.cos(phi);
+        const z=R*Math.sin(phi)*Math.sin(theta);
+        /* rotate x */
+        const ry2=y*Math.cos(t*.15)-z*Math.sin(t*.15);
+        const rz=y*Math.sin(t*.15)+z*Math.cos(t*.15);
+        const sc=1+rz*.0005;
+        v.push([ox+x*sc,oy+ry2*sc,rz]);
+      }
+    }
+    /* longitude lines */
+    for(let lo=0;lo<LON;lo++){
+      cx.beginPath();
+      for(let la=0;la<=LAT;la++){
+        const i=la*LON+lo, p=v[i];
+        const a=(p[2]+R)/(R*2);
+        cx.strokeStyle=`rgba(255,225,53,${a*.25})`;
+        cx.lineWidth=.7;
+        if(la===0)cx.moveTo(p[0],p[1]);else cx.lineTo(p[0],p[1]);
+      }
+      cx.stroke();
+    }
+    /* latitude lines */
+    for(let la=1;la<LAT;la++){
+      cx.beginPath();
+      for(let lo=0;lo<=LON;lo++){
+        const i=la*LON+(lo%LON), p=v[i];
+        const a=(p[2]+R)/(R*2);
+        cx.strokeStyle=`rgba(245,242,238,${a*.1})`;
+        cx.lineWidth=.5;
+        if(lo===0)cx.moveTo(p[0],p[1]);else cx.lineTo(p[0],p[1]);
+      }
+      cx.stroke();
+    }
+    /* glowing poles */
+    const top=v[0], bot=v[LAT*LON];
+    [top,bot].forEach(p=>{
+      const g=cx.createRadialGradient(p[0],p[1],0,p[0],p[1],8);
+      g.addColorStop(0,'rgba(255,225,53,.9)');g.addColorStop(1,'rgba(255,225,53,0)');
+      cx.fillStyle=g;cx.beginPath();cx.arc(p[0],p[1],8,0,Math.PI*2);cx.fill();
+    });
+  }
+
+  let t=0;
+  function frame(){
+    t+=.005;
+    cx.clearRect(0,0,W(),H());
+    cx.fillStyle='#080807';cx.fillRect(0,0,W(),H());
+
+    /* grid */
+    cx.save();cx.strokeStyle='rgba(245,242,238,.03)';cx.lineWidth=1;
+    for(let x=0;x<W();x+=48){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,H());cx.stroke()}
+    for(let y=0;y<H();y+=48){cx.beginPath();cx.moveTo(0,y);cx.lineTo(W(),y);cx.stroke()}
+    cx.restore();
+
+    /* connections */
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.sqrt(dx*dx+dy*dy);
+      if(d<100){
+        cx.save();cx.globalAlpha=(1-d/100)*.08;
+        cx.strokeStyle='rgba(245,242,238,1)';cx.lineWidth=.6;
+        cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);cx.stroke();
+        cx.restore();
+      }
+    }
+
+    /* particles */
+    pts.forEach(p=>{
+      const g=cx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3);
+      g.addColorStop(0,'rgba(245,242,238,.5)');g.addColorStop(1,'rgba(245,242,238,0)');
+      cx.fillStyle=g;cx.beginPath();cx.arc(p.x,p.y,p.r*3,0,Math.PI*2);cx.fill();
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W())p.vx*=-1;if(p.y<0||p.y>H())p.vy*=-1;
+    });
+
+    /* sphere */
+    sphere(W()*.5,H()*.5,Math.min(W(),H())*.35,t);
+
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* INSTRUCTOR CANVASES — editorial monochrome + yellow accent */
+document.querySelectorAll('.instrCanvas').forEach(cv=>{
+  const cx=cv.getContext('2d');
+  const seed=parseInt(cv.dataset.seed)||1;
+  function r(){cv.width=cv.offsetWidth*devicePixelRatio;cv.height=cv.offsetHeight*devicePixelRatio;cx.scale(devicePixelRatio,devicePixelRatio)}
+  r();window.addEventListener('resize',r);
+  const W=()=>cv.offsetWidth, H=()=>cv.offsetHeight;
+  let t=seed*60;
+
+  /* unique shape per card */
+  const shapes=[
+    (cx,W,H,t)=>{/* rotating cube wireframe */
+      const s=Math.min(W(),H())*.3, cx2=W()*.5, cy2=H()*.5;
+      const cos=Math.cos,sin=Math.sin;
+      const verts=[[-s,-s,-s],[s,-s,-s],[s,s,-s],[-s,s,-s],[-s,-s,s],[s,-s,s],[s,s,s],[-s,s,s]];
+      const edges=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+      const proj=verts.map(([x,y,z])=>{
+        const rx=x,ry2=y*cos(t*.3)-z*sin(t*.3),rz=y*sin(t*.3)+z*cos(t*.3);
+        const rx2=rx*cos(t*.2)+rz*sin(t*.2),rz2=-rx*sin(t*.2)+rz*cos(t*.2);
+        const sc=1+rz2*.001;
+        return [cx2+rx2*sc,cy2+ry2*sc,rz2];
+      });
+      edges.forEach(([a,b])=>{
+        const pa=proj[a],pb=proj[b];
+        const bright=.3+((pa[2]+pb[2])/(s*4)+.5)*.5;
+        cx.strokeStyle=`rgba(255,225,53,${bright*.6})`;cx.lineWidth=1.2;
+        cx.beginPath();cx.moveTo(pa[0],pa[1]);cx.lineTo(pb[0],pb[1]);cx.stroke();
+      });
+    },
+    (cx,W,H,t)=>{/* helix */
+      const cx2=W()*.5,cy2=H()*.5, r2=Math.min(W(),H())*.28;
+      for(let i=0;i<2;i++){
+        cx.beginPath();
+        for(let j=0;j<=80;j++){
+          const a=j/80*Math.PI*4+t*.4+i*Math.PI;
+          const x=cx2+r2*Math.cos(a);
+          const y=cy2+((j/80)-.5)*H()*.7;
+          const bright=.2+.6*((Math.sin(a+i*Math.PI)+1)/2);
+          cx.strokeStyle=i===0?`rgba(255,225,53,${bright})`:`rgba(245,242,238,${bright*.25})`;
+          cx.lineWidth=1.5;
+          if(j===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+        }
+        cx.stroke();
+      }
+    },
+    (cx,W,H,t)=>{/* icosahedron-like */
+      const cx2=W()*.5,cy2=H()*.5,R=Math.min(W(),H())*.3;
+      const n=6;
+      for(let ring=0;ring<3;ring++){
+        const rr=R*(ring+1)/3;
+        cx.beginPath();
+        for(let i=0;i<=n;i++){
+          const a=i/n*Math.PI*2+t*.3+ring*.5;
+          const x=cx2+rr*Math.cos(a), y=cy2+rr*Math.sin(a);
+          i===0?cx.moveTo(x,y):cx.lineTo(x,y);
+        }
+        cx.strokeStyle=ring===0?`rgba(255,225,53,.5)`:`rgba(245,242,238,${.15-ring*.04})`;
+        cx.lineWidth=ring===0?1.5:.8;cx.stroke();
+        /* spokes */
+        if(ring===0){
+          for(let i=0;i<n;i++){
+            const a=i/n*Math.PI*2+t*.3;
+            cx.beginPath();cx.moveTo(cx2,cy2);
+            cx.lineTo(cx2+rr*Math.cos(a),cy2+rr*Math.sin(a));
+            cx.strokeStyle='rgba(255,225,53,.12)';cx.lineWidth=.8;cx.stroke();
+          }
+        }
+      }
+      /* center */
+      const dg=cx.createRadialGradient(cx2,cy2,0,cx2,cy2,10);
+      dg.addColorStop(0,'rgba(255,225,53,.9)');dg.addColorStop(1,'rgba(255,225,53,0)');
+      cx.fillStyle=dg;cx.beginPath();cx.arc(cx2,cy2,10,0,Math.PI*2);cx.fill();
+    }
+  ];
+
+  function f(){
+    t+=.016;cx.clearRect(0,0,W(),H());
+    cx.fillStyle='#0a0908';cx.fillRect(0,0,W(),H());
+    /* grid */
+    cx.save();cx.strokeStyle='rgba(245,242,238,.03)';cx.lineWidth=1;
+    for(let i=0;i<W();i+=30){cx.beginPath();cx.moveTo(i,0);cx.lineTo(i,H());cx.stroke()}
+    cx.restore();
+    /* shape */
+    shapes[(seed-1)%shapes.length](cx,W,H,t);
+    requestAnimationFrame(f);
+  }
+  f();
+});
+</script>
+</body>
+</html>
