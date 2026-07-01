@@ -329,14 +329,10 @@ h2 em{font-style:italic;font-weight:300}
 .tcard-divider{width:32px;height:1px;background:var(--y);margin-bottom:24px}
 .tcard-author{display:flex;align-items:center;gap:16px}
 .tcard-av{
-  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  width:52px;height:52px;border-radius:50%;flex-shrink:0;
   position:relative;overflow:hidden;
 }
-.av1{background:linear-gradient(135deg,#7c3aed,#ec4899)}
-.av2{background:linear-gradient(135deg,#0891b2,#059669)}
-.av3{background:linear-gradient(135deg,#d97706,#dc2626)}
-.av4{background:linear-gradient(135deg,#4f46e5,#0891b2)}
-.tcard-av::after{content:'';position:absolute;inset:8px;border-radius:50%;background:rgba(255,255,255,.18)}
+.tcard-av canvas{width:52px;height:52px;border-radius:50%;display:block}
 .tcard-name{font-size:13px;font-weight:700;letter-spacing:-.01em}
 .tcard-meta{font-size:11.5px;color:var(--mid);margin-top:2px}
 .tcard-journey{
@@ -1015,7 +1011,7 @@ footer{
       <div class="tcard-q">«За 4 месяца перешла из маркетинга в дизайн. Групповые разборы — отдельный уровень: начинаешь видеть решения, которых раньше не замечала.»</div>
       <div class="tcard-divider"></div>
       <div class="tcard-author">
-        <div class="tcard-av av1"></div>
+        <div class="tcard-av"><canvas class="portrait-cv" data-pid="1" width="104" height="104"></canvas></div>
         <div><div class="tcard-name">Анна К.</div><div class="tcard-meta">Поток 3</div>
         <div class="tcard-journey">Маркетолог <b>→</b> Junior UI Designer</div></div>
       </div>
@@ -1024,7 +1020,7 @@ footer{
       <div class="tcard-q">«Думал, что дизайн не для меня — я фронтендер. Оказалось, всё применимо. Теперь могу и спроектировать, и реализовать.»</div>
       <div class="tcard-divider"></div>
       <div class="tcard-author">
-        <div class="tcard-av av2"></div>
+        <div class="tcard-av"><canvas class="portrait-cv" data-pid="2" width="104" height="104"></canvas></div>
         <div><div class="tcard-name">Дмитрий В.</div><div class="tcard-meta">Поток 2</div>
         <div class="tcard-journey">Frontend dev <b>→</b> Fullstack + Design</div></div>
       </div>
@@ -1033,7 +1029,7 @@ footer{
       <div class="tcard-q">«Обратная связь наставника на каждую работу — не просто "хорошо/плохо", а конкретно: что исправить и почему.»</div>
       <div class="tcard-divider"></div>
       <div class="tcard-author">
-        <div class="tcard-av av3"></div>
+        <div class="tcard-av"><canvas class="portrait-cv" data-pid="3" width="104" height="104"></canvas></div>
         <div><div class="tcard-name">Мария С.</div><div class="tcard-meta">Поток 4</div>
         <div class="tcard-journey">Без опыта <b>→</b> Product Designer</div></div>
       </div>
@@ -1042,7 +1038,7 @@ footer{
       <div class="tcard-q">«Уже работал дизайнером, но интуитивно. Курс систематизировал всё — теперь объясняю любое решение на языке UX.»</div>
       <div class="tcard-divider"></div>
       <div class="tcard-author">
-        <div class="tcard-av av4"></div>
+        <div class="tcard-av"><canvas class="portrait-cv" data-pid="4" width="104" height="104"></canvas></div>
         <div><div class="tcard-name">Алексей Р.</div><div class="tcard-meta">Поток 1</div>
         <div class="tcard-journey">Дизайнер <b>→</b> Middle UI/UX</div></div>
       </div>
@@ -1115,6 +1111,198 @@ footer{
 </footer>
 
 <script>
+/* PORTRAIT AVATARS */
+(function(){
+  const portraits = {
+    1: function(ctx,s){ // Анна — тёплая, фиолетово-розовая
+      const g=ctx.createLinearGradient(0,0,s,s);
+      g.addColorStop(0,'#2d1b4e'); g.addColorStop(1,'#1a0a2e');
+      ctx.fillStyle=g; ctx.fillRect(0,0,s,s);
+      // шея
+      ctx.fillStyle='#e8c4a0';
+      ctx.fillRect(s*.42,s*.58,s*.16,s*.18);
+      // плечи
+      const sg=ctx.createLinearGradient(0,s*.7,0,s);
+      sg.addColorStop(0,'#c084e8'); sg.addColorStop(1,'#9333ea');
+      ctx.fillStyle=sg;
+      ctx.beginPath(); ctx.ellipse(s/2,s*1.05,s*.38,s*.3,0,0,Math.PI*2); ctx.fill();
+      // голова
+      ctx.fillStyle='#f0d4b8';
+      ctx.beginPath(); ctx.ellipse(s/2,s*.38,s*.22,s*.26,0,0,Math.PI*2); ctx.fill();
+      // волосы
+      const hg=ctx.createLinearGradient(s*.2,s*.1,s*.8,s*.4);
+      hg.addColorStop(0,'#3d1a6e'); hg.addColorStop(1,'#6d28d9');
+      ctx.fillStyle=hg;
+      ctx.beginPath(); ctx.ellipse(s/2,s*.28,s*.23,s*.18,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.3,s*.42,s*.08,s*.14,-.3,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.7,s*.42,s*.08,s*.14,.3,0,Math.PI*2); ctx.fill();
+      // глаза
+      ctx.fillStyle='#1a0a2e';
+      ctx.beginPath(); ctx.ellipse(s*.4,s*.39,s*.04,s*.025,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.6,s*.39,s*.04,s*.025,0,0,Math.PI*2); ctx.fill();
+      // блик глаз
+      ctx.fillStyle='#fff';
+      ctx.beginPath(); ctx.arc(s*.41,s*.385,s*.01,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(s*.61,s*.385,s*.01,0,Math.PI*2); ctx.fill();
+      // нос
+      ctx.strokeStyle='rgba(0,0,0,.2)'; ctx.lineWidth=1.2;
+      ctx.beginPath(); ctx.arc(s*.5,s*.45,s*.03,0,Math.PI); ctx.stroke();
+      // губы
+      ctx.fillStyle='#d4786a';
+      ctx.beginPath(); ctx.ellipse(s*.5,s*.49,s*.07,s*.03,0,0,Math.PI*2); ctx.fill();
+      // серьга
+      ctx.strokeStyle='#f0c040'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.arc(s*.27,s*.44,s*.025,0,Math.PI*2); ctx.stroke();
+    },
+    2: function(ctx,s){ // Дмитрий — холодный, тёмно-синий
+      const g=ctx.createLinearGradient(0,0,s,s);
+      g.addColorStop(0,'#0a1628'); g.addColorStop(1,'#0f2447');
+      ctx.fillStyle=g; ctx.fillRect(0,0,s,s);
+      // плечи/одежда
+      const cg=ctx.createLinearGradient(0,s*.65,0,s);
+      cg.addColorStop(0,'#1e3a5f'); cg.addColorStop(1,'#0a1e40');
+      ctx.fillStyle=cg;
+      ctx.beginPath(); ctx.ellipse(s/2,s*1.05,s*.42,s*.32,0,0,Math.PI*2); ctx.fill();
+      // воротник
+      ctx.fillStyle='#fff';
+      ctx.beginPath(); ctx.moveTo(s*.44,s*.72); ctx.lineTo(s*.5,s*.65); ctx.lineTo(s*.56,s*.72); ctx.fill();
+      // шея
+      ctx.fillStyle='#c8a882';
+      ctx.fillRect(s*.43,s*.58,s*.14,s*.16);
+      // голова
+      ctx.fillStyle='#d4aa82';
+      ctx.beginPath(); ctx.ellipse(s/2,s*.37,s*.21,s*.26,0,0,Math.PI*2); ctx.fill();
+      // волосы тёмные короткие
+      ctx.fillStyle='#1a120a';
+      ctx.beginPath(); ctx.ellipse(s/2,s*.25,s*.22,s*.14,0,Math.PI,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.29,s*.35,s*.06,s*.1,-.2,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.71,s*.35,s*.06,s*.1,.2,0,Math.PI*2); ctx.fill();
+      // глаза
+      ctx.fillStyle='#1a1208';
+      ctx.beginPath(); ctx.ellipse(s*.39,s*.38,s*.04,s*.026,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.61,s*.38,s*.04,s*.026,0,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle='#fff';
+      ctx.beginPath(); ctx.arc(s*.4,s*.375,s*.01,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(s*.62,s*.375,s*.01,0,Math.PI*2); ctx.fill();
+      // брови
+      ctx.strokeStyle='rgba(0,0,0,.5)'; ctx.lineWidth=1.8;
+      ctx.beginPath(); ctx.moveTo(s*.35,s*.33); ctx.lineTo(s*.44,s*.34); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(s*.56,s*.34); ctx.lineTo(s*.65,s*.33); ctx.stroke();
+      // нос
+      ctx.strokeStyle='rgba(0,0,0,.18)'; ctx.lineWidth=1.2;
+      ctx.beginPath(); ctx.arc(s*.5,s*.445,s*.03,0,Math.PI); ctx.stroke();
+      // рот
+      ctx.strokeStyle='#a0705a'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.moveTo(s*.43,s*.49); ctx.quadraticCurveTo(s*.5,s*.505,s*.57,s*.49); ctx.stroke();
+      // щетина намёк
+      ctx.fillStyle='rgba(26,18,8,.12)';
+      ctx.beginPath(); ctx.ellipse(s*.5,s*.51,s*.1,s*.05,0,0,Math.PI*2); ctx.fill();
+    },
+    3: function(ctx,s){ // Мария — тёплая, терракота
+      const g=ctx.createLinearGradient(0,0,s,s);
+      g.addColorStop(0,'#2c1810'); g.addColorStop(1,'#1a0f0a');
+      ctx.fillStyle=g; ctx.fillRect(0,0,s,s);
+      // одежда
+      const cg=ctx.createLinearGradient(0,s*.65,0,s);
+      cg.addColorStop(0,'#c2410c'); cg.addColorStop(1,'#9a3412');
+      ctx.fillStyle=cg;
+      ctx.beginPath(); ctx.ellipse(s/2,s*1.08,s*.4,s*.32,0,0,Math.PI*2); ctx.fill();
+      // шея
+      ctx.fillStyle='#e8c4a0';
+      ctx.fillRect(s*.42,s*.58,s*.16,s*.17);
+      // голова
+      ctx.fillStyle='#f2d5b0';
+      ctx.beginPath(); ctx.ellipse(s/2,s*.38,s*.2,s*.25,0,0,Math.PI*2); ctx.fill();
+      // волосы рыжие длинные
+      const hg=ctx.createLinearGradient(s*.2,0,s*.8,s*.6);
+      hg.addColorStop(0,'#b45309'); hg.addColorStop(1,'#92400e');
+      ctx.fillStyle=hg;
+      ctx.beginPath(); ctx.ellipse(s/2,s*.27,s*.21,s*.15,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.26,s*.5,s*.09,s*.22,-.15,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.74,s*.5,s*.09,s*.22,.15,0,Math.PI*2); ctx.fill();
+      // глаза зелёные
+      ctx.fillStyle='#14532d';
+      ctx.beginPath(); ctx.ellipse(s*.4,s*.39,s*.04,s*.028,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.6,s*.39,s*.04,s*.028,0,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle='#fff';
+      ctx.beginPath(); ctx.arc(s*.41,s*.385,s*.01,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(s*.61,s*.385,s*.01,0,Math.PI*2); ctx.fill();
+      // веснушки
+      ctx.fillStyle='rgba(180,83,9,.35)';
+      [s*.36,s*.42,s*.58,s*.64].forEach((x,i)=>{
+        ctx.beginPath(); ctx.arc(x,s*.44,s*.012,0,Math.PI*2); ctx.fill();
+      });
+      // нос
+      ctx.strokeStyle='rgba(0,0,0,.15)'; ctx.lineWidth=1.2;
+      ctx.beginPath(); ctx.arc(s*.5,s*.45,s*.03,0,Math.PI); ctx.stroke();
+      // улыбка
+      ctx.strokeStyle='#b05040'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.arc(s*.5,s*.46,s*.06,0.2,Math.PI-.2); ctx.stroke();
+      // сережка
+      ctx.fillStyle='#f0c040';
+      ctx.beginPath(); ctx.arc(s*.26,s*.46,s*.018,0,Math.PI*2); ctx.fill();
+    },
+    4: function(ctx,s){ // Алексей — нейтральный, графитовый
+      const g=ctx.createLinearGradient(0,0,s,s);
+      g.addColorStop(0,'#18181b'); g.addColorStop(1,'#09090b');
+      ctx.fillStyle=g; ctx.fillRect(0,0,s,s);
+      // одежда тёмная водолазка
+      ctx.fillStyle='#27272a';
+      ctx.beginPath(); ctx.ellipse(s/2,s*1.08,s*.44,s*.34,0,0,Math.PI*2); ctx.fill();
+      // воротник водолазки
+      ctx.fillStyle='#3f3f46';
+      ctx.beginPath(); ctx.ellipse(s/2,s*.74,s*.14,s*.07,0,0,Math.PI*2); ctx.fill();
+      // шея
+      ctx.fillStyle='#c4a07a';
+      ctx.fillRect(s*.43,s*.58,s*.14,s*.18);
+      // голова
+      ctx.fillStyle='#d4a87a';
+      ctx.beginPath(); ctx.ellipse(s/2,s*.37,s*.21,s*.265,0,0,Math.PI*2); ctx.fill();
+      // волосы тёмные с проседью
+      const hg=ctx.createLinearGradient(s*.2,0,s*.8,s*.3);
+      hg.addColorStop(0,'#27272a'); hg.addColorStop(.6,'#3f3f46'); hg.addColorStop(1,'#52525b');
+      ctx.fillStyle=hg;
+      ctx.beginPath(); ctx.ellipse(s/2,s*.24,s*.22,s*.15,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.3,s*.33,s*.07,s*.1,-.2,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.7,s*.33,s*.07,s*.1,.2,0,Math.PI*2); ctx.fill();
+      // глаза тёмно-серые
+      ctx.fillStyle='#1c1917';
+      ctx.beginPath(); ctx.ellipse(s*.39,s*.38,s*.04,s*.028,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(s*.61,s*.38,s*.04,s*.028,0,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle='#fff';
+      ctx.beginPath(); ctx.arc(s*.4,s*.375,s*.01,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(s*.62,s*.375,s*.01,0,Math.PI*2); ctx.fill();
+      // очки
+      ctx.strokeStyle='rgba(255,255,255,.35)'; ctx.lineWidth=1.4;
+      ctx.beginPath(); ctx.ellipse(s*.39,s*.38,s*.07,s*.05,0,0,Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(s*.61,s*.38,s*.07,s*.05,0,0,Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(s*.46,s*.38); ctx.lineTo(s*.54,s*.38); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(s*.32,s*.37); ctx.lineTo(s*.28,s*.35); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(s*.68,s*.37); ctx.lineTo(s*.72,s*.35); ctx.stroke();
+      // нос
+      ctx.strokeStyle='rgba(0,0,0,.18)'; ctx.lineWidth=1.2;
+      ctx.beginPath(); ctx.arc(s*.5,s*.445,s*.03,0,Math.PI); ctx.stroke();
+      // рот нейтральный
+      ctx.strokeStyle='#8a6040'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.moveTo(s*.43,s*.5); ctx.quadraticCurveTo(s*.5,s*.51,s*.57,s*.5); ctx.stroke();
+      // борода лёгкая
+      ctx.fillStyle='rgba(60,50,40,.2)';
+      ctx.beginPath(); ctx.ellipse(s*.5,s*.52,s*.12,s*.06,0,0,Math.PI*2); ctx.fill();
+    }
+  };
+
+  document.querySelectorAll('canvas.portrait-cv').forEach(cv=>{
+    const pid=+cv.dataset.pid;
+    const ctx=cv.getContext('2d');
+    const s=cv.width;
+    // clip to circle
+    ctx.save();
+    ctx.beginPath(); ctx.arc(s/2,s/2,s/2,0,Math.PI*2); ctx.clip();
+    if(portraits[pid]) portraits[pid](ctx,s);
+    ctx.restore();
+  });
+})();
+
 /* FIT TITLE LINE 1 */
 function fitH1(){
   const line=document.querySelector('.h1-line1');
