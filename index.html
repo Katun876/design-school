@@ -120,9 +120,12 @@ nav{
 }
 .pre::before{content:'';display:block;width:28px;height:1px;background:var(--y)}
 h1{
-  font-size:clamp(60px,13.5vw,220px);font-weight:900;line-height:.93;
+  font-size:clamp(48px,7.8vw,220px);font-weight:900;line-height:.93;
   letter-spacing:-.05em;text-transform:uppercase;
-  width:100%;
+  width:100%;white-space:nowrap;
+}
+@media(max-width:900px){
+  h1{white-space:normal}
 }
 h1 em{font-style:italic;font-weight:300;letter-spacing:-.03em}
 .hero-cta-row{
@@ -195,11 +198,11 @@ h2 em{font-style:italic;font-weight:300}
 
 /* STAT CELL */
 .stat-cell{
-  background:#0f0e0c;padding:44px 36px;
-  display:flex;flex-direction:column;justify-content:flex-end;
+  background:#0f0e0c;padding:52px 44px;
+  display:flex;flex-direction:row;align-items:flex-end;gap:48px;
 }
-.big-stat{font-size:88px;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--y);margin-bottom:12px}
-.big-stat-label{font-size:14px;color:rgba(245,242,238,.4);line-height:1.55;max-width:200px}
+.big-stat{font-size:120px;font-weight:900;letter-spacing:-.05em;line-height:.88;color:var(--y);flex-shrink:0}
+.big-stat-label{font-size:18px;color:rgba(245,242,238,.55);line-height:1.55;max-width:none;flex:1;padding-bottom:8px}
 
 /* ── PROGRAMME ── */
 .prog-grid{display:grid;grid-template-columns:320px 1fr;gap:0;border:1px solid var(--line-w)}
