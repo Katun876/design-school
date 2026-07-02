@@ -97,9 +97,13 @@ h1,h2{hyphens:auto}
 [data-theme="light"] footer .footer-col a{color:rgba(255,255,255,.5)}
 [data-theme="light"] footer .footer-col a:hover{color:#fff}
 [data-theme="light"] footer .footer-tagline{color:rgba(255,255,255,.3)}
-[data-theme="light"] footer .footer-bot p{color:rgba(255,255,255,.2)}
-[data-theme="light"] footer .footer-bot-links a{color:rgba(255,255,255,.2)}
-[data-theme="light"] footer .footer-cta-social a{color:rgba(255,255,255,.4)}
+[data-theme="light"] footer .footer-bot p{color:rgba(255,255,255,.55)}
+[data-theme="light"] footer .footer-bot-links a{color:rgba(255,255,255,.55)}
+[data-theme="light"] footer .footer-bot-links a:hover{color:#fff}
+[data-theme="light"] footer .footer-cta-social a{color:rgba(255,255,255,.65)}
+[data-theme="light"] footer .footer-col a{color:rgba(255,255,255,.7)}
+[data-theme="light"] footer .footer-col-title{color:rgba(255,255,255,.4)}
+[data-theme="light"] footer .footer-tagline{color:rgba(255,255,255,.5)}
 [data-theme="light"] .modal-box{background:#f0ece6;border-color:rgba(12,11,10,.15)}
 [data-theme="light"] .modal-title{color:#0c0b0a}
 [data-theme="light"] .modal-sub{color:rgba(12,11,10,.45)}
@@ -1601,7 +1605,7 @@ function toggleMod(btn){btn.closest('.mod').classList.toggle('open')}
       for(let la=0;la<=LAT;la++){
         const i=la*LON+lo, p=v[i];
         const a=(p[2]+R)/(R*2);
-        cx.strokeStyle=light?`rgba(124,58,237,${a*.5})`:`rgba(255,225,53,${a*.25})`;
+        cx.strokeStyle=light?`rgba(80,40,10,${a*.6})`:`rgba(255,225,53,${a*.25})`;
         cx.lineWidth=light?.9:.7;
         if(la===0)cx.moveTo(p[0],p[1]);else cx.lineTo(p[0],p[1]);
       }
@@ -1613,7 +1617,7 @@ function toggleMod(btn){btn.closest('.mod').classList.toggle('open')}
       for(let lo=0;lo<=LON;lo++){
         const i=la*LON+(lo%LON), p=v[i];
         const a=(p[2]+R)/(R*2);
-        cx.strokeStyle=light?`rgba(219,39,119,${a*.18})`:`rgba(245,242,238,${a*.1})`;
+        cx.strokeStyle=light?`rgba(80,40,10,${a*.12})`:`rgba(245,242,238,${a*.1})`;
         cx.lineWidth=.5;
         if(lo===0)cx.moveTo(p[0],p[1]);else cx.lineTo(p[0],p[1]);
       }
@@ -1670,7 +1674,7 @@ function toggleMod(btn){btn.closest('.mod').classList.toggle('open')}
 
   let tl=0;
   function frameLight(){
-    tl+=.002;
+    tl+=.012;
     cx.fillStyle='#f0ebe3';
     cx.fillRect(0,0,W(),H());
 
