@@ -1601,8 +1601,8 @@ function toggleMod(btn){btn.closest('.mod').classList.toggle('open')}
       for(let la=0;la<=LAT;la++){
         const i=la*LON+lo, p=v[i];
         const a=(p[2]+R)/(R*2);
-        cx.strokeStyle=light?`rgba(150,100,0,${a*.35})`:`rgba(255,225,53,${a*.25})`;
-        cx.lineWidth=.7;
+        cx.strokeStyle=light?`rgba(124,58,237,${a*.5})`:`rgba(255,225,53,${a*.25})`;
+        cx.lineWidth=light?.9:.7;
         if(la===0)cx.moveTo(p[0],p[1]);else cx.lineTo(p[0],p[1]);
       }
       cx.stroke();
@@ -1613,7 +1613,7 @@ function toggleMod(btn){btn.closest('.mod').classList.toggle('open')}
       for(let lo=0;lo<=LON;lo++){
         const i=la*LON+(lo%LON), p=v[i];
         const a=(p[2]+R)/(R*2);
-        cx.strokeStyle=light?`rgba(12,11,10,${a*.08})`:`rgba(245,242,238,${a*.1})`;
+        cx.strokeStyle=light?`rgba(219,39,119,${a*.18})`:`rgba(245,242,238,${a*.1})`;
         cx.lineWidth=.5;
         if(lo===0)cx.moveTo(p[0],p[1]);else cx.lineTo(p[0],p[1]);
       }
@@ -1631,27 +1631,20 @@ function toggleMod(btn){btn.closest('.mod').classList.toggle('open')}
   const isLight=()=>document.documentElement.getAttribute('data-theme')==='light';
 
   /* ── LIGHT CONSTELLATION ── */
-  const PALETTE=['#7c3aed','#db2777','#ea580c','#0891b2','#059669','#d97706','#dc2626','#4f46e5'];
-  const NUM_LIGHT=420;
+  const PALETTE=['#7c3aed','#db2777','#ea580c','#0891b2','#059669','#d97706','#4f46e5','#0e7490'];
+  const NUM_LIGHT=160;
   const lpts=[];
   for(let i=0;i<NUM_LIGHT;i++){
-    const a=Math.random()*Math.PI*2;
-    const dist=Math.random();
-    const cx0=.5+(.5-Math.random())*.4, cy0=.5+(.5-Math.random())*.5;
     lpts.push({
-      px: cx0, py: cy0,
-      x: 0, y: 0,
-      vx:(Math.random()-.5)*.18, vy:(Math.random()-.5)*.18,
-      r: Math.random()*2.5+1,
+      x: Math.random(), y: Math.random(), // normalized 0-1
+      vx:(Math.random()-.5)*.04,
+      vy:(Math.random()-.5)*.04,
+      r: Math.random()*2+1,
       color: PALETTE[Math.floor(Math.random()*PALETTE.length)],
-      shape: Math.floor(Math.random()*3), // 0=circle,1=triangle,2=diamond
-      alpha: Math.random()*.6+.35,
+      shape: Math.floor(Math.random()*3),
+      alpha: Math.random()*.45+.25,
       phase: Math.random()*Math.PI*2,
-      speed: Math.random()*.003+.001,
     });
-  }
-  function initLightPts(){
-    lpts.forEach(p=>{ p.x=p.px*W(); p.y=p.py*H(); });
   }
 
   function drawShape(ctx,x,y,r,shape,color,alpha){
@@ -1675,44 +1668,26 @@ function toggleMod(btn){btn.closest('.mod').classList.toggle('open')}
     ctx.globalAlpha=1;
   }
 
+  let tl=0;
   function frameLight(){
+    tl+=.002;
     cx.fillStyle='#f0ebe3';
     cx.fillRect(0,0,W(),H());
 
-    /* soft radial glow center */
-    const glow=cx.createRadialGradient(W()*.5,H()*.5,0,W()*.5,H()*.5,W()*.45);
-    glow.addColorStop(0,'rgba(124,58,237,.06)');
-    glow.addColorStop(.5,'rgba(219,39,119,.04)');
-    glow.addColorStop(1,'rgba(240,235,227,0)');
-    cx.fillStyle=glow; cx.fillRect(0,0,W(),H());
+    /* wireframe sphere — light palette */
+    sphere(W()*.5,H()*.5,Math.min(W(),H())*.32,tl,'light');
 
-    /* connections between close particles */
-    for(let i=0;i<lpts.length;i+=2){
-      for(let j=i+1;j<lpts.length;j+=2){
-        const dx=lpts[i].x-lpts[j].x, dy=lpts[i].y-lpts[j].y;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        if(d<70){
-          cx.save();
-          cx.globalAlpha=(1-d/70)*.12;
-          cx.strokeStyle=lpts[i].color;
-          cx.lineWidth=.8;
-          cx.beginPath();cx.moveTo(lpts[i].x,lpts[i].y);cx.lineTo(lpts[j].x,lpts[j].y);cx.stroke();
-          cx.restore();
-        }
-      }
-    }
-
-    /* particles */
-    lpts.forEach((p,i)=>{
-      const t2=performance.now()*.001;
-      const pulse=Math.sin(t2*p.speed*200+p.phase)*.3+.7;
-      drawShape(cx, p.x, p.y, p.r*pulse, p.shape, p.color, p.alpha*pulse);
-      p.x+=p.vx; p.y+=p.vy;
-      if(p.x<-10||p.x>W()+10) p.vx*=-1;
-      if(p.y<-10||p.y>H()+10) p.vy*=-1;
+    /* sparse particles around sphere, spread across canvas */
+    const now=performance.now()*.001;
+    lpts.forEach(p=>{
+      const px=p.x*W(), py=p.y*H();
+      const pulse=Math.sin(now*.4+p.phase)*.2+.8;
+      drawShape(cx, px, py, p.r*pulse, p.shape, p.color, p.alpha*pulse);
+      p.x+=p.vx/W(); p.y+=p.vy/H();
+      if(p.x<0||p.x>1) p.vx*=-1;
+      if(p.y<0||p.y>1) p.vy*=-1;
     });
   }
-  initLightPts();
 
   /* ── DARK FRAME ── */
   let t=0;
