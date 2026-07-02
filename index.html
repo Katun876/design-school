@@ -341,13 +341,6 @@ h2 em{font-style:italic;font-weight:300}
 
 /* ── PROGRAMME ── */
 .prog-grid{display:grid;grid-template-columns:320px 1fr;gap:0;border:1px solid var(--line-w);position:relative}
-.prog-grid::before{
-  content:'';position:absolute;
-  left:52px;top:0;bottom:0;width:1px;
-  background:rgba(255,225,53,.25);
-  pointer-events:none;z-index:1;
-}
-[data-theme="light"] .prog-grid::before{background:rgba(92,58,30,.3)}
 .prog-info{
   padding:48px 36px;
   position:sticky;top:56px;height:fit-content;
