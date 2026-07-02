@@ -338,13 +338,20 @@ h2 em{font-style:italic;font-weight:300}
 .big-stat-label{font-size:18px;color:rgba(245,242,238,.55);line-height:1.55;max-width:none;flex:1;padding-bottom:8px}
 
 /* ── PROGRAMME ── */
-.prog-grid{display:grid;grid-template-columns:320px 1fr;gap:0;border:1px solid var(--line-w)}
+.prog-grid{display:grid;grid-template-columns:320px 1fr;gap:0;border:1px solid var(--line-w);position:relative}
+.prog-grid::before{
+  content:'';position:absolute;
+  left:52px;top:0;bottom:0;width:1px;
+  background:rgba(255,225,53,.25);
+  pointer-events:none;z-index:1;
+}
+[data-theme="light"] .prog-grid::before{background:rgba(92,58,30,.3)}
 .prog-info{
   padding:48px 36px;border-right:1px solid var(--line-w);
   position:sticky;top:56px;height:fit-content;
 }
 .prog-info p{font-size:14px;color:rgba(245,242,238,.45);line-height:1.7;margin-top:14px;margin-bottom:32px}
-.prog-chips{display:flex;flex-direction:column;gap:0;border-left:1px solid rgba(255,225,53,.25);padding-left:16px}
+.prog-chips{display:flex;flex-direction:column;gap:0;padding-left:16px}
 .prog-chip{
   background:var(--ink);padding:14px 0;
   display:flex;gap:12px;align-items:center;
