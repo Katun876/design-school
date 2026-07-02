@@ -699,6 +699,94 @@ footer{
   .footer-col{padding:16px 0}
   .footer-logo-big{font-size:18px}
 }
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{
+  background:#0c0b0a;
+  border:1px solid rgba(255,255,255,.1);
+  width:100%;max-width:480px;
+  padding:48px 44px;
+  position:relative;
+  transform:translateY(24px) scale(.97);
+  transition:transform .35s cubic-bezier(.22,1,.36,1);
+}
+.modal-overlay.open .modal-box{transform:translateY(0) scale(1)}
+.modal-close{
+  position:absolute;top:20px;right:20px;
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.3);font-size:14px;
+  width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+  transition:.15s;
+}
+.modal-close:hover{color:#fff}
+.modal-badge{
+  display:inline-block;font-size:9.5px;font-weight:700;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--y);border:1px solid rgba(255,225,53,.3);
+  padding:4px 10px;margin-bottom:24px;
+}
+.modal-title{
+  font-size:clamp(32px,5vw,48px);font-weight:900;
+  letter-spacing:-.04em;text-transform:uppercase;
+  line-height:.95;margin-bottom:16px;color:var(--paper);
+}
+.modal-sub{font-size:13.5px;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:32px}
+.modal-form{display:flex;flex-direction:column;gap:20px}
+.mf-group{display:flex;flex-direction:column;gap:8px}
+.mf-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.mf-input{
+  background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.15);
+  color:var(--paper);font-size:15px;padding:10px 0;outline:none;
+  transition:.2s;font-family:inherit;
+}
+.mf-input::placeholder{color:rgba(255,255,255,.2)}
+.mf-input:focus{border-bottom-color:var(--y)}
+.mf-chips{display:flex;gap:8px;flex-wrap:wrap}
+.mf-chip{
+  background:transparent;border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.4);font-size:11px;font-weight:700;
+  letter-spacing:.06em;padding:7px 14px;cursor:pointer;
+  transition:.15s;font-family:inherit;
+}
+.mf-chip:hover{border-color:rgba(255,255,255,.4);color:var(--paper)}
+.mf-chip.active{background:var(--y);border-color:var(--y);color:#000}
+.mf-submit{
+  background:var(--y);color:#000;border:none;cursor:pointer;
+  font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:16px 24px;margin-top:8px;
+  transition:.2s;font-family:inherit;
+}
+.mf-submit:hover{background:#fff}
+.mf-legal{font-size:10.5px;color:rgba(255,255,255,.2);line-height:1.5;margin-top:-4px}
+.mf-legal a{color:rgba(255,255,255,.35);text-decoration:underline}
+.modal-success{
+  display:none;flex-direction:column;align-items:center;
+  text-align:center;padding:16px 0;
+}
+.modal-success.show{display:flex}
+.modal-form.hide{display:none}
+.modal-success-icon{
+  width:56px;height:56px;border-radius:50%;
+  background:var(--y);color:#000;
+  font-size:22px;display:flex;align-items:center;justify-content:center;
+  font-weight:900;margin-bottom:20px;
+}
+.modal-success-title{font-size:28px;font-weight:900;letter-spacing:-.03em;margin-bottom:10px;color:var(--paper)}
+.modal-success-sub{font-size:14px;color:rgba(255,255,255,.4);line-height:1.6}
+@media(max-width:480px){
+  .modal-box{padding:36px 24px}
+  .modal-title{font-size:32px}
+}
 </style>
 </head>
 <body>
@@ -717,7 +805,7 @@ footer{
   <div class="nav-logo">Design<span>S</span>chool</div>
   <div class="nav-right">
     <span class="nav-tag">Набор открыт</span>
-    <button class="nav-btn" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Записаться</button>
+    <button class="nav-btn" onclick="openModal()">Записаться</button>
   </div>
 </nav>
 
@@ -1056,8 +1144,43 @@ footer{
   <div class="cta-right">
     <p>Познакомьтесь с программой, наставником и форматом — без обязательств и без оплаты. Старт в сентябре 2026.</p>
     <div class="cta-actions">
-      <button class="btn-y-big">Записаться на бесплатный урок →</button>
-      <button class="btn-ghost-big">Задать вопрос</button>
+      <button class="btn-y-big" onclick="openModal()">Записаться на бесплатный урок →</button>
+      <button class="btn-ghost-big" onclick="openModal()">Задать вопрос</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">Набор открыт · Старт сентябрь 2026</div>
+    <h3 class="modal-title">Записаться<br>на курс</h3>
+    <p class="modal-sub">Оставьте контакт — мы пришлём программу и ответим на вопросы. Без спама.</p>
+    <form class="modal-form" onsubmit="submitModal(event)">
+      <div class="mf-group">
+        <label class="mf-label">Ваше имя</label>
+        <input class="mf-input" type="text" placeholder="Александра" required>
+      </div>
+      <div class="mf-group">
+        <label class="mf-label">Телефон или Telegram</label>
+        <input class="mf-input" type="text" placeholder="+7 900 000 00 00 или @username" required>
+      </div>
+      <div class="mf-group">
+        <label class="mf-label">Ваш уровень</label>
+        <div class="mf-chips">
+          <button type="button" class="mf-chip active" onclick="selectChip(this)">С нуля</button>
+          <button type="button" class="mf-chip" onclick="selectChip(this)">Есть основы</button>
+          <button type="button" class="mf-chip" onclick="selectChip(this)">Уже в профессии</button>
+        </div>
+      </div>
+      <button type="submit" class="mf-submit">Отправить заявку →</button>
+      <p class="mf-legal">Нажимая кнопку, вы соглашаетесь с <a href="#">политикой конфиденциальности</a></p>
+    </form>
+    <div class="modal-success" id="modalSuccess">
+      <div class="modal-success-icon">✓</div>
+      <div class="modal-success-title">Заявка принята!</div>
+      <p class="modal-success-sub">Свяжемся с вами в течение рабочего дня и пришлём подробную программу.</p>
     </div>
   </div>
 </div>
@@ -1067,7 +1190,7 @@ footer{
   <div class="footer-hero">
     <div class="footer-headline">Стань<br><em>дизайнером</em><br>интерфейсов.</div>
     <div class="footer-cta-row">
-      <a href="#cta" class="btn-y">Начать обучение</a>
+      <a href="#" class="btn-y" onclick="openModal();return false">Начать обучение</a>
       <div class="footer-cta-social">
         <a href="#">Telegram</a>
         <a href="#">Instagram</a>
@@ -1525,6 +1648,35 @@ document.querySelectorAll('.instrCanvas').forEach(cv=>{
   }
   f();
 });
+
+/* MODAL */
+function openModal(){
+  const m=document.getElementById('modal');
+  m.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  const m=document.getElementById('modal');
+  m.classList.remove('open');
+  document.body.style.overflow='';
+}
+function selectChip(el){
+  el.closest('.mf-chips').querySelectorAll('.mf-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+function submitModal(e){
+  e.preventDefault();
+  document.querySelector('.modal-form').classList.add('hide');
+  document.getElementById('modalSuccess').classList.add('show');
+  setTimeout(()=>{ closeModal(); resetModal(); },3500);
+}
+function resetModal(){
+  document.querySelector('.modal-form').classList.remove('hide');
+  document.getElementById('modalSuccess').classList.remove('show');
+  document.querySelector('.modal-form').reset();
+  document.querySelectorAll('.mf-chip').forEach((c,i)=>c.classList.toggle('active',i===0));
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
 </script>
 </body>
 </html>
