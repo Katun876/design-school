@@ -176,6 +176,8 @@ a{color:inherit;text-decoration:none}
   transform:translate(-50%,-50%);
   transition:all .12s ease-out;
 }
+[data-theme="light"] .cursor{background:#5c3a1e}
+[data-theme="light"] .cursor-ring{border-color:rgba(92,58,30,.5)}
 body:has(a:hover) .cursor,body:has(button:hover) .cursor{width:14px;height:14px;background:var(--r)}
 body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:54px;height:54px;border-color:rgba(230,51,34,.3)}
 
@@ -1246,7 +1248,7 @@ footer{
   </div>
 
   <!-- TESTIMONIALS inside instructors section -->
-  <div style="margin-top:1px">
+  <div style="margin-top:0">
   <div class="testi-grid">
     <div class="tcard">
       <div class="tcard-q">«За 4 месяца перешла из маркетинга в дизайн. Групповые разборы — отдельный уровень: начинаешь видеть решения, которых раньше не замечала.»</div>
